@@ -399,14 +399,14 @@ public class LoanService implements LoanServiceInterface {
     }
 
     public Set<Loan> prioritizeLoans() {
-        Set<Loan> loans = new HashSet<>();
+        List<Loan> loans = new ArrayList<>();
 
         for (Loan loan : this.loans) {
             loans.add(loan);
         }
 
         Collections.sort(loans, new LoanComparator());
-
-        return loans;
+        Collections.reverse(loans);
+        return new LinkedHashSet<Loan>(loans);
     }
 }
