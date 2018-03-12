@@ -7,6 +7,7 @@ public class CompoundInterestCalculator {
 
     private static double amount;
 
+    //Try not not declare variable as class field if it is only used in one method ("temporaryInterestRates" and "interestRateCounter")
     private static double temporaryInterestRates[];
     private static double interestRates[];
     private static int interestRateCounter;
@@ -14,6 +15,7 @@ public class CompoundInterestCalculator {
     private static String frequency;
     private static double[][] periodicAmounts;
 
+    //Good
     private static final int PERCENT = 100;
 
     public static void main(String[] args) {
@@ -25,6 +27,7 @@ public class CompoundInterestCalculator {
 
         periodicAmounts = new double[interestRates.length][periodLength];
 
+        //Calculation is almost correct. I hoped to see a matrix of size "interestRates.length * frequency"
         for (int i = 0; i < interestRates.length; i++) {
             for (int j = 0; j < periodLength; j++) {
                 lastElement = (j - 1 >= 0) ? (lastElement + periodicAmounts[i][j - 1]) : 0;
@@ -57,7 +60,7 @@ public class CompoundInterestCalculator {
             System.out.print("Interest rate (%): ");
             interestRate = scanner.nextDouble();
             if (interestRate > 0 && interestRate <= 100) {
-
+                    //Correct
                     interestRateCounter++;
                     temporaryInterestRates = new double[interestRateCounter];
                     System.arraycopy(interestRates, 0, temporaryInterestRates, 0, interestRateCounter - 1);
@@ -70,7 +73,7 @@ public class CompoundInterestCalculator {
                 System.out.println("Invalid input! Try again! ");
             }
 
-
+        //Either "interestRate != 0" could be replaced with "true", or "if(interestRate == 0)" (above) removed/changed.
         } while (interestRate != 0);
 
         while (true) {
@@ -98,6 +101,7 @@ public class CompoundInterestCalculator {
     private static double calculateAmountAfterYear(double amountAfterYear, double interestRate, int degree, int n) {
 
         return amount * Math.pow((1 + (interestRate / PERCENT) / n), n * (degree + 1)) - amount;
+        //???
         // screw this
     }
 
