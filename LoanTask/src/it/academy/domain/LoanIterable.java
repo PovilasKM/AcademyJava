@@ -13,6 +13,9 @@ public class LoanIterable implements Iterable<Loan>{
         length = loans.length;
     }
 
+    //I don't think it is the best idea using "LoanIterable" for converting Loan collections to arrays and then back to collections.
+    // "Butter on top of a butter" :)
+    // You should be fine passing collections directly.
     public LoanIterable(List<Loan> loans){
         this.loans = loans.toArray(new Loan[loans.size()]);
         length = loans.size();
@@ -21,6 +24,7 @@ public class LoanIterable implements Iterable<Loan>{
 
     @Override
     public Iterator<Loan> iterator() {
+        //As Intellij is already telling you, this local variable could be inlined (aka. returned directly).
         Iterator<Loan> loanIterator = new Iterator<Loan>() {
 
             private int iteratorCounter = 0;
