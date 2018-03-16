@@ -3,7 +3,7 @@ package it.academy.domain;
 import java.util.Iterator;
 import java.util.List;
 
-public class LoanIterable implements Iterable<Loan>{
+public class LoanIterable implements Iterable<Loan> {
 
     private Loan[] loans;
     public int length;
@@ -13,7 +13,7 @@ public class LoanIterable implements Iterable<Loan>{
         length = loans.length;
     }
 
-    public LoanIterable(List<Loan> loans){
+    public LoanIterable(List<Loan> loans) {
         this.loans = loans.toArray(new Loan[loans.size()]);
         length = loans.size();
     }
@@ -21,7 +21,7 @@ public class LoanIterable implements Iterable<Loan>{
 
     @Override
     public Iterator<Loan> iterator() {
-        Iterator<Loan> loanIterator = new Iterator<Loan>() {
+        return new Iterator<Loan>() {
 
             private int iteratorCounter = 0;
 
@@ -40,7 +40,5 @@ public class LoanIterable implements Iterable<Loan>{
                 return loans[iteratorCounter++];
             }
         };
-
-        return loanIterator;
     }
 }

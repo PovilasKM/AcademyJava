@@ -3,16 +3,27 @@ package it.academy.service;
 import it.academy.domain.LoanRiskType;
 
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoanRiskTypeComparator implements Comparator<LoanRiskType> {
+
+    private final Map<LoanRiskType, Integer> LOAN_RISK_TYPE_RANKS = new HashMap<LoanRiskType, Integer>() {{
+        put(LoanRiskType.LOW_RISK, 0);
+        put(LoanRiskType.NORMAL_RISK, 1);
+        put(LoanRiskType.HIGH_RISK, 2);
+    }};
+
     @Override
-    public int compare(LoanRiskType o1, LoanRiskType o2) {
-        if(o1 == LoanRiskType.HIGH_RISK && o2 != LoanRiskType.HIGH_RISK) return -1;
-        if(o1 != LoanRiskType.HIGH_RISK && o2 == LoanRiskType.HIGH_RISK) return 1;
+    public int compare(LoanRiskType loanRiskTypeToCompare, LoanRiskType loanRiskTypeToCompareWith) {
+        return getRank(loanRiskTypeToCompare).compareTo(getRank(loanRiskTypeToCompareWith));
+    }
 
-        if(o1 == LoanRiskType.NORMAL_RISK && o2 != LoanRiskType.NORMAL_RISK) return -1;
-        if(o1 != LoanRiskType.NORMAL_RISK && o2 == LoanRiskType.NORMAL_RISK) return 1;
-
-        return 0;
+    private Integer getRank(LoanRiskType loanRiskType) {
+        Integer rank = LOAN_RISK_TYPE_RANKS.get(loanRiskType);
+        if (rank == null) {
+            throw new IllegalArgumentException("LoanRiskType = " + loanRiskType + " not implemented yet!");
+        }
+        return rank;
     }
 }

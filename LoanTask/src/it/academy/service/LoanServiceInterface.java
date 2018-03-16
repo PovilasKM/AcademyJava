@@ -29,7 +29,7 @@ public interface LoanServiceInterface {
 
     List<Loan> findExpiredLandLoansInReservation();
 
-    ArrayList<Loan> findLoansOfHigherThanAverageDepreciation();
+    List<Loan> findLoansOfHigherThanAverageDepreciation();
 
     LoanIterable findLoansByClass(LoanIterable loans, Class classType);
 

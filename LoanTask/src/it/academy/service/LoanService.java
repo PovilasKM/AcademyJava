@@ -97,7 +97,7 @@ public class LoanService implements LoanServiceInterface {
     @Override
     public List<Loan> findExpiredHighRiskVehicleLoansOfHighestDuration() {
         int highestDuration = 0;
-        ArrayList<Loan> expiredHighestRiskLoans = new ArrayList<>();
+        List<Loan> expiredHighestRiskLoans = new ArrayList<>();
         for (Loan loan : findLoansByClass(findLoansByRiskType(LoanRiskType.HIGH_RISK, loans), VehicleLoan.class)) {
             if (!LoanUtil.isValid(loan)) {
                 int duration = loan.getTermInYears();
@@ -126,7 +126,7 @@ public class LoanService implements LoanServiceInterface {
 
     @Override
     public List<Loan> findExpiredLandLoansInReservation() {
-        ArrayList<Loan> expiredLandInReservationLoans = new ArrayList<>();
+        List<Loan> expiredLandInReservationLoans = new ArrayList<>();
         for (Loan loan : findLoansByClass(loans, LandLoan.class)) {
             if (!LoanUtil.isValid(loan)) {
                 if (((LandLoan) loan).isInReservation()) {
@@ -139,7 +139,7 @@ public class LoanService implements LoanServiceInterface {
     }
 
     @Override
-    public ArrayList<Loan> findLoansOfHigherThanAverageDepreciation() {
+    public List<Loan> findLoansOfHigherThanAverageDepreciation() {
         BigDecimal totalDepreciation = BigDecimal.ZERO;
         LoanIterable vehicleLoans = findLoansByClass(loans, VehicleLoan.class);
         int vehicleLoanCount = 0;
@@ -150,7 +150,7 @@ public class LoanService implements LoanServiceInterface {
         }
 
         BigDecimal averageDepreciation = totalDepreciation.divide(new BigDecimal(vehicleLoanCount), BigDecimal.ROUND_CEILING);
-        ArrayList<Loan> vehicleOfHigherThanAverageDepreciationLoans = new ArrayList<>();
+        List<Loan> vehicleOfHigherThanAverageDepreciationLoans = new ArrayList<>();
 
         for (Loan loan : vehicleLoans) {
             BigDecimal vehicleDepreciation = LoanUtil.calculateVehicleDepreciation((VehicleLoan) loan);
@@ -164,7 +164,7 @@ public class LoanService implements LoanServiceInterface {
 
     @Override
     public LoanIterable findLoansByClass(LoanIterable loans, Class classType) {
-        ArrayList<Loan> classLoans = new ArrayList<>();
+        List<Loan> classLoans = new ArrayList<>();
         for (Loan loan : loans) {
             if (classType.isInstance(loan)) {
                 classLoans.add(loan);
@@ -176,7 +176,7 @@ public class LoanService implements LoanServiceInterface {
 
     @Override
     public LoanIterable findLoansByRiskType(LoanRiskType riskType, LoanIterable loans) {
-        ArrayList<Loan> highRiskLoans = new ArrayList<>();
+        List<Loan> highRiskLoans = new ArrayList<>();
         if (loans == null) {
             loans = this.loans;
         }
@@ -190,7 +190,7 @@ public class LoanService implements LoanServiceInterface {
 
     @Override
     public List<Loan> findLoansByRealEstatePurpose(RealEstatePurpose purpose, LoanIterable loans) {
-        ArrayList<Loan> highRiskLoans = new ArrayList<>();
+        List<Loan> highRiskLoans = new ArrayList<>();
         for (Loan loan : loans) {
             if (((RealEstateLoan) loan).getPurpose() == purpose) {
                 highRiskLoans.add(loan);
@@ -213,17 +213,17 @@ public class LoanService implements LoanServiceInterface {
 
     @Override
     public Map<LoanRiskType, Collection<Loan>> groupLoansByRiskType() {
-        Map<LoanRiskType, Collection<Loan>> loans = new TreeMap<>();
+        Map<LoanRiskType, Collection<Loan>> groupedLoans = new TreeMap<>();
 
         for (Loan loan : this.loans) {
-            if (!loans.containsKey(loan.getRiskType())) {
-                loans.put(loan.getRiskType(), new ArrayList<Loan>());
-                loans.get(loan.getRiskType()).add(loan);
+            if (!groupedLoans.containsKey(loan.getRiskType())) {
+                groupedLoans.put(loan.getRiskType(), new ArrayList<Loan>());
+                groupedLoans.get(loan.getRiskType()).add(loan);
             } else {
-                loans.get(loan.getRiskType()).add(loan);
+                groupedLoans.get(loan.getRiskType()).add(loan);
             }
         }
-        return loans;
+        return groupedLoans;
     }
 
     @Override

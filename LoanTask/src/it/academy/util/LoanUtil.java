@@ -22,7 +22,7 @@ public class LoanUtil {
     }
 
     public static BigDecimal calculateInterest(Loan loan) {
-        return loan.getPrice().multiply((loan.getInterestRate().divide(new BigDecimal(100))));
+        return loan.getPrice().multiply((loan.getInterestRate().divide(new BigDecimal(100), 2 , BigDecimal.ROUND_CEILING)));
     }
 
     public static BigDecimal calculateTotalLoanCost(Loan loan) {

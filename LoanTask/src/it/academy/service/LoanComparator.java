@@ -10,17 +10,17 @@ public class LoanComparator implements Comparator<Loan> {
     public int compare(Loan o1, Loan o2) {
 
         int riskTypeCompareResult = new LoanRiskTypeComparator().compare(o1.getRiskType(), o2.getRiskType());
-        int totalCostCompareResult = o2.getTotalLoanCost().compareTo(o1.getTotalLoanCost());
-        int creationDateCompareResult = o1.getCreationDate().compareTo(o2.getCreationDate());
 
         if (riskTypeCompareResult != 0) {
             return riskTypeCompareResult;
         }
 
+        int totalCostCompareResult = o2.getTotalLoanCost().compareTo(o1.getTotalLoanCost());
+
         if (totalCostCompareResult != 0) {
             return totalCostCompareResult;
         }
 
-        return creationDateCompareResult;
+        return o1.getCreationDate().compareTo(o2.getCreationDate());
     }
 }

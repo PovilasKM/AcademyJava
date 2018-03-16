@@ -31,11 +31,14 @@ public class CarLoan extends VehicleLoan implements Comparable<CarLoan>{
     }
 
     public int compareTo(CarLoan carLoan){
+        int carLoanPriceCompareResult = carLoan.getPrice().compareTo(this.getPrice());
+        if(carLoanPriceCompareResult != 0) {
+            return carLoanPriceCompareResult;
+        }
 
-        if(carLoan.getPrice().compareTo(this.getPrice()) > 0) return 1;
-        if(carLoan.getPrice().compareTo(this.getPrice()) < 0) return -1;
         if(carLoan.getEnginePower() > this.getEnginePower()) return 1;
         if(carLoan.getEnginePower() < this.getEnginePower()) return -1;
+
         return this.getInterestRate().compareTo(carLoan.getInterestRate());
 
     }
